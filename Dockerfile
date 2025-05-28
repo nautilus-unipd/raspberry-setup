@@ -48,11 +48,14 @@ RUN git clone https://github.com/raspberrypi/rpicam-apps.git && \
     meson install -C build && \
     ldconfig
 
-# Set ubuntu as default user
-USER ubuntu
-
-# Set up .bashrc
+# Set environment for the ubuntu user
 ENV HOME=/home/ubuntu
-RUN echo "cd \$HOME" >> $HOME/.bashrc && \
-    echo "source /opt/ros/jazzy/local_setup.bash" >> $HOME/.bashrc && \
-    cd $HOME
+
+# Set up .bashrc for ubuntu
+RUN echo "cd \$HOME" >> /home/ubuntu/.bashrc && \
+    echo "source /opt/ros/jazzy/local_setup.bash" >> /home/ubuntu/.bashrc && \
+    chown ubuntu:ubuntu /home/ubuntu/.bashrc
+
+# Switch to the ubuntu user at the very end
+USER ubuntu
+WORKDIR /home/ubuntu
