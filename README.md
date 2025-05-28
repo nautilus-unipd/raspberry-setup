@@ -38,7 +38,7 @@ echo \
   "deb [arch=$(dpkg --print-architecture) \
   signed-by=/etc/apt/keyrings/docker.asc] \
   https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" \
+  $(. /etc/os-release && echo \"${UBUNTU_CODENAME:-$VERSION_CODENAME}\") stable" \
   | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
@@ -88,3 +88,25 @@ Available cameras
 then your camera is working correctly.
 
 ---
+
+## 5. Share Internet Access with Jetson Nano (via Ethernet)
+
+To allow the Jetson Nano to access the internet through the Raspberry Pi (using Ethernet), run the following on the Raspberry Pi:
+
+```bash
+# Create a shared network connection over eth0
+sudo nmcli connection add type ethernet ifname eth0 con-name jetson-network-shared ipv4.method shared ipv4.addresses 192.168.2.1/24
+
+# Enable IP forwarding and NAT
+sudo apt update
+sudo apt install iptables-persistent
+
+sudo iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o wlan0 -j MASQUERADE
+sudo iptables -A FORWARD -i wlan0 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
+
+# Save firewall rules
+sudo netfilter-persistent save
+```
+
+Once configured, the Jetson Nano connected to the Raspberry Pi via Ethernet should have internet access.
