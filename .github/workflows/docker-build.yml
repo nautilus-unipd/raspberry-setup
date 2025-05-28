@@ -6,6 +6,7 @@ on:
     paths:
       - 'Dockerfile'
       - '.github/workflows/build.yml'
+  workflow_dispatch:
 
 jobs:
   # Build on a VM with the latest version of ubuntu
