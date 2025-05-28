@@ -2,9 +2,6 @@ FROM ros:jazzy
 
 USER root
 
-# Create, if not existing, 'ubuntu' user
-RUN id -u ubuntu &>/dev/null || useradd -m -s /bin/bash ubuntu
-
 # Set no password to 'ubuntu'
 RUN apt-get update && apt-get install -y sudo && \
     echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/ubuntu-nopasswd && \
