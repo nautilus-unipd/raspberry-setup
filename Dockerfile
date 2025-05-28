@@ -10,14 +10,15 @@ RUN apt-get update && apt-get install -y sudo && \
     echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/ubuntu-nopasswd && \
     chmod 0440 /etc/sudoers.d/ubuntu-nopasswd
 
-# Install packages
+# Install base dependencies
 RUN apt-get update && \
     apt-get install -y python3-pip git python3-jinja2 python3-colcon-meson \
     libboost-dev libgnutls28-dev openssl libtiff5-dev pybind11-dev \
     qtbase5-dev libqt5core5a libqt5gui5 libqt5widgets5 meson cmake \
     python3-yaml python3-ply libglib2.0-dev libgstreamer-plugins-base1.0-dev \
     libboost-program-options-dev libdrm-dev libexif-dev ninja-build \
-    libpng-dev libopencv-dev libavdevice-dev libepoxy-dev
+    libpng-dev libopencv-dev libavdevice-dev libepoxy-dev \
+    gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libcamera
 
 # Build and install libcamera
 WORKDIR /opt
@@ -54,8 +55,9 @@ ENV HOME=/home/ubuntu
 # Set up .bashrc for ubuntu
 RUN echo "cd \$HOME" >> /home/ubuntu/.bashrc && \
     echo "source /opt/ros/jazzy/local_setup.bash" >> /home/ubuntu/.bashrc && \
+    echo "export GST_PLUGIN_PATH=/opt/libcamera/build/src/gstreamer/" >> /home/ubuntu/.bashrc && \
     chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
-# Switch to the ubuntu user at the very end
+# Switch to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
