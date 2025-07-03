@@ -57,7 +57,13 @@ echo "admin   ALL=(ALL:ALL) ALL" | sudo tee -a /etc/sudoers
 sudo usermod -aG docker admin
 ```
 
-## 4. Test the system
+## 4. Modify ssh settings
+```bash
+mkdir -p ~/.ssh && chmod 700 ~/.ssh && touch ~/.ssh/config && chmod 600 ~/.ssh/config && \
+grep -q "Host raspberrypi" ~/.ssh/config || echo -e "\nHost raspberrypi\n    HostName raspberrypi.local\n    User admin\n    ServerAliveInterval 30\n    ServerAliveCountMax 5" >> ~/.ssh/config
+```
+
+## 5. Test the system
 
 Connect a MIPI camera to the CSI port, then run:
 

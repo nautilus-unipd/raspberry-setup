@@ -4,8 +4,7 @@ if [ ! -f "$WORKSPACE_DIR/install/setup.bash" ]; then
   echo "Building ROS2 workspace for the first time..."
   source /opt/ros/jazzy/setup.bash
   cd "$WORKSPACE_DIR"
-  colcon build --symlink-install
+  colcon build --symlink-install --continue-on-error
 fi
 
-exec "$@"  # Passa il controllo al comando finale (es. bash)
-    
+exec "$@"

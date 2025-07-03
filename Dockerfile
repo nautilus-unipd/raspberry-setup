@@ -61,7 +61,7 @@ ENV HOME=/home/ubuntu
 RUN echo "cd \$HOME" >> /home/ubuntu/.bashrc && \
     echo "source /opt/ros/jazzy/local_setup.bash" >> /home/ubuntu/.bashrc && \
     echo "export GST_PLUGIN_PATH=/opt/libcamera/build/src/gstreamer/" >> /home/ubuntu/.bashrc && \
-    echo "cd \$HOME/sensing-rigs-ros2/ros2_wp" >> /home/ubuntu/.bashrc && \
+    echo "cd \$HOME/sensing-rigs-ros2/ros2_ws" >> /home/ubuntu/.bashrc && \
     echo "[ -f install/setup.bash ] && source install/setup.bash" >> /home/ubuntu/.bashrc && \
     chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
