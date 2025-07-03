@@ -104,3 +104,4 @@ sudo netfilter-persistent save
 ```
 
 Once configured, the Jetson Nano connected to the Raspberry Pi via Ethernet should have internet access.
+.
