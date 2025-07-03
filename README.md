@@ -50,20 +50,12 @@ sudo apt-get install -y \
   docker-compose-plugin
 ```
 
-## 3. Run the Docker container
-
-Start the container in interactive mode, with elevated privileges and direct access to video devices:
+## 3. Add "admin" to sudoers and to "docker" group
 
 ```bash
-sudo docker run -it --privileged \
-  --net=host \
-  -v /dev:/dev/ \
-  -v /run/udev/:/run/udev/ \
-  --group-add video \
-  ghcr.io/nautilus-unipd/raspberry-setup:latest
+echo "admin   ALL=(ALL:ALL) ALL" | sudo tee -a /etc/sudoers
+sudo usermod -aG docker admin
 ```
-
-Inside the container, you will find Ubuntu 24.04 and ROS 2 Jazzy already configured and ready to use with Raspberry Pi MIPI cameras.
 
 ## 4. Test the system
 

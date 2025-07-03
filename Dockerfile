@@ -19,7 +19,11 @@ RUN apt-get update && \
     libboost-program-options-dev libdrm-dev libexif-dev ninja-build \
     libpng-dev libopencv-dev libavdevice-dev libepoxy-dev \
     gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libcamera \
-    ros-jazzy-cv-bridge python3-opencv
+    ros-jazzy-cv-bridge python3-opencv 
+
+# Install python dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
 # Build and install libcamera
 WORKDIR /opt
@@ -57,7 +61,15 @@ ENV HOME=/home/ubuntu
 RUN echo "cd \$HOME" >> /home/ubuntu/.bashrc && \
     echo "source /opt/ros/jazzy/local_setup.bash" >> /home/ubuntu/.bashrc && \
     echo "export GST_PLUGIN_PATH=/opt/libcamera/build/src/gstreamer/" >> /home/ubuntu/.bashrc && \
+    echo "cd \$HOME/sensing-rigs-ros2/ros2_wp" >> /home/ubuntu/.bashrc && \
+    echo "[ -f install/setup.bash ] && source install/setup.bash" >> /home/ubuntu/.bashrc && \
     chown ubuntu:ubuntu /home/ubuntu/.bashrc
+
+# Add auto build command (with colcon)
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["bash"]
 
 # Switch to the ubuntu user
 USER ubuntu
