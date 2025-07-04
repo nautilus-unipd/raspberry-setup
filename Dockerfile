@@ -63,6 +63,7 @@ RUN echo "cd \$HOME" >> /home/ubuntu/.bashrc && \
     echo "export GST_PLUGIN_PATH=/opt/libcamera/build/src/gstreamer/" >> /home/ubuntu/.bashrc && \
     echo "cd \$HOME/sensing-rigs-ros2/ros2_ws" >> /home/ubuntu/.bashrc && \
     echo "[ -f install/setup.bash ] && source install/setup.bash" >> /home/ubuntu/.bashrc && \
+    echo "export LIBCAMERA_LOG_LEVELS=*:4" >> /home/ubuntu/.bashrc && \
     chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
 # Add auto build command (with colcon)
