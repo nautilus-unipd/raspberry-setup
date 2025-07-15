@@ -23,7 +23,7 @@ RUN apt-get update && \
 
 # Install python dependencies
 COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
+RUN pip3 install --ignore-installed --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
 # Build and install libcamera
 WORKDIR /opt
