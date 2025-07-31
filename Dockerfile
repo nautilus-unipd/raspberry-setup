@@ -120,17 +120,14 @@ RUN ARCH=$(uname -m) && \
     chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
 # Add auto build command (with colcon)
-#COPY entrypoint.sh /entrypoint.sh
-#RUN chmod +x /entrypoint.sh
-#ENTRYPOINT ["/entrypoint.sh"]
-#CMD ["bash"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["bash"]
 
 # Switch to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
-
-# Copy debug script
-COPY debug_libcamera.py /home/ubuntu/debug_libcamera.py
 
 # Final verification of Python imports with detailed debugging
 RUN export PYTHONPATH="/usr/local/lib/python3.12/dist-packages:/usr/local/lib/python3.12/site-packages:/usr/local/lib/python3/dist-packages:$PYTHONPATH" 
