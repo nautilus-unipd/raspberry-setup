@@ -17,7 +17,7 @@ if [ -d "$WORKSPACE_DIR" ] && [ ! -f "$WORKSPACE_DIR/install/setup.bash" ]; then
   echo "Building Nautilus ROS2 workspace for the first time..."
   source /opt/ros/jazzy/setup.bash
   cd "$WORKSPACE_DIR"
-  colcon build --symlink-install --continue-on-error
+  colcon build --continue-on-error
 fi
 
 exec "$@"
