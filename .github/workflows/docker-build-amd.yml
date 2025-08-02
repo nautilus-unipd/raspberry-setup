@@ -1,0 +1,29 @@
+name: Build AMD64 Docker Image
+
+on:
+  push:
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/build-amd64.yml'
+  workflow_dispatch:
+
+jobs:
+  build-amd:
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          docker build -t ghcr.io/nautilus-unipd/raspberry-setup:amd64 .
+          docker push ghcr.io/nautilus-unipd/raspberry-setup:amd64
