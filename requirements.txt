@@ -10,3 +10,5 @@ tqdm
 albumentations
 tensorboard
 typeguard
+gpiozero
+lgpio

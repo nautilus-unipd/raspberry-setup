@@ -32,7 +32,11 @@ RUN apt update && \
     libboost-program-options-dev libdrm-dev libexif-dev ninja-build \
     libpng-dev libopencv-dev libavdevice-dev libepoxy-dev \
     gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libcamera \
-    ros-jazzy-cv-bridge python3-opencv ros-jazzy-image-view && \
+    ros-jazzy-cv-bridge python3-opencv ros-jazzy-image-view \
+    # Install lgpio, necessary for gpiozero
+    # Install the gpiozero library
+    liblgpio-dev \
+    build-essential && \
     apt clean && rm -rf /var/lib/apt/lists/* 
 
 # Install python dependencies
