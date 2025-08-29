@@ -77,6 +77,9 @@ RUN pip3 install --no-cache-dir --break-system-packages picamera2 && \
     python3 -c "import kms; print('kms stub import successful')" || echo "kms import failed" && \
     python3 -c "import picamera2; print('picamera2 import successful')" || echo "picamera2 import failed"
 
+# Install gpio libraries for pump control
+RUN pip3 install --no-cache-dir --break-system-packages RPi.GPIO pigpio gpiozero requests 
+
 # Build and install rpicam-apps (optional command-line camera tools)
 WORKDIR /opt
 RUN git clone https://github.com/raspberrypi/rpicam-apps.git && \
